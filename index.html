@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>The Writing Quest</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --ink:#1C1710; --paper:#FBF6EA; --panel:#FFFDF9; --line:#E4D9BF; --mute:#6B5F4C;
+  --gold:#F2B233; --gold-ink:#7A5200; --gold-soft:#FBE6B3; --good:#2E7D4F; --hex:rgba(242,178,51,.10);
+  --disp:"Chakra Petch",system-ui,sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ink:#F4ECDC;--paper:#161310;--panel:#201B15;--line:#3A3225;--mute:#B8A88A;--gold-ink:#FFD27A;--gold-soft:#3B2E10;--good:#6FCF97;--hex:rgba(242,178,51,.07)}}
+:root[data-theme="dark"]{--ink:#F4ECDC;--paper:#161310;--panel:#201B15;--line:#3A3225;--mute:#B8A88A;--gold-ink:#FFD27A;--gold-soft:#3B2E10;--good:#6FCF97;--hex:rgba(242,178,51,.07)}
+*{box-sizing:border-box}
+body{margin:0;background:#F4F0EA url('https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/asset/file/07bc0e8b-070e-4103-95a9-006859f852b0/Subscribe_-_Background.png') center top / cover fixed no-repeat;color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+@media (max-width:700px){body{background-attachment:scroll}}
+.wrap{max-width:860px;margin:0 auto;padding:28px 20px 80px}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.hexlogo{width:38px;height:42px;background:var(--gold);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);display:grid;place-items:center;font-family:var(--disp);font-weight:700;color:#1C1710;font-size:20px;flex:none}
+.top small{display:block;color:var(--mute);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.top b{font-family:var(--disp);font-size:18px}
+h1{font-family:var(--disp);font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0 0 8px;text-wrap:balance}
+.lede{font-size:18px;max-width:60ch;color:var(--mute);margin:0 0 22px}
+.sticky{position:sticky;top:0;z-index:5;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:14px;margin-bottom:26px;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px}
+.bar{flex:1;height:10px;border-radius:999px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;background:var(--gold);width:0;transition:width .4s}
+.lvlrow{display:flex;gap:4px;margin:0 0 30px;flex-wrap:wrap}
+.lvlrow span{flex:1;min-width:120px;text-align:center;font-family:var(--disp);font-size:13px;padding:8px 6px;border:1.5px solid var(--line);border-radius:6px;color:var(--mute)}
+.lvlrow span.now{background:var(--gold-soft);border-color:var(--gold);color:var(--ink)}
+.lvlrow span.target{border-color:var(--good);border-style:dashed;color:var(--ink)}
+.lvlrow small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em}
+section{margin:0 0 36px}
+h2{font-family:var(--disp);font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink);margin:0 0 12px;display:flex;align-items:center;gap:10px}
+h2::after{content:"";flex:1;height:1px;background:var(--line)}
+p{max-width:66ch}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+.rec{display:grid;gap:10px}
+.rec input{width:100%;font:inherit;font-size:14px;padding:10px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
+.rec input:focus,textarea:focus,button:focus-visible{outline:3px solid var(--gold);outline-offset:1px}
+.frame{aspect-ratio:16/9;border:1px dashed var(--line);border-radius:8px;display:grid;place-items:center;color:var(--mute);font-family:var(--mono);font-size:13px;overflow:hidden;background:var(--paper)}
+.frame iframe{width:100%;height:100%;border:0}
+.learn{display:grid;gap:10px}
+.learn textarea{width:100%;font:inherit;font-size:15px;padding:10px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);resize:vertical}
+.mission{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-bottom:10px}
+.mission input{margin-top:5px;width:18px;height:18px;accent-color:var(--gold)}
+.mission b{font-family:var(--disp);font-size:16px;display:block}
+.mission p{margin:4px 0 0;font-size:15px}
+.mission .xp{font-family:var(--mono);font-size:12px;color:var(--gold-ink);white-space:nowrap}
+.mission.done{opacity:.6}.mission.done b{text-decoration:line-through}
+details{border:1px solid var(--line);border-radius:8px;margin-top:10px;background:var(--paper)}
+summary{cursor:pointer;padding:10px 12px;font-family:var(--disp);font-size:14px;list-style:none;display:flex;justify-content:space-between}
+summary::after{content:"copy ▸";font-family:var(--mono);font-size:11px;color:var(--mute)}
+pre{margin:0;padding:12px 14px;border-top:1px solid var(--line);white-space:pre-wrap;font-family:var(--mono);font-size:13px;line-height:1.5}
+.copy{font:inherit;font-family:var(--disp);font-size:12px;background:var(--gold);color:#1C1710;border:0;border-radius:6px;padding:6px 10px;cursor:pointer;margin:8px 12px 12px}
+.pipe{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-family:var(--disp);font-size:15px;margin:10px 0 16px}
+.pipe span{background:var(--ink);color:var(--paper);padding:6px 10px;border-radius:6px}.pipe i{color:var(--gold-ink);font-style:normal}
+.stepgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.step{border:1px solid var(--line);border-radius:8px;padding:12px;background:var(--panel)}
+.step b{font-family:var(--disp);display:block;margin-bottom:4px}
+.step p{margin:0;font-size:14.5px}
+.boss{border:2px solid var(--gold);border-radius:10px;padding:18px;background:var(--panel)}
+.boss ol{padding-left:20px;margin:8px 0}
+.sig{margin-top:40px;color:var(--mute);font-size:14px}
+.defs{display:grid;gap:6px;font-size:14.5px}.defs div{padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--paper)}.defs b{font-family:var(--disp)}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:8px;font-family:var(--disp);opacity:0;transition:opacity .3s;pointer-events:none}.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div class="hexlogo">B</div><div><b>The Purposeful Performer</b><small>Inner Circle · Follow-up · Demo page · Sept 2026</small></div></div>
+
+  <h1>The Writing Quest</h1>
+  <p class="lede">This is the page an Inner Circle member got the morning after our call, with the names taken out. Everything from the call is on it. There is one key move before the next session: Allow Claude to propose, but you decide.</p>
+
+  <div class="sticky"><span>QUEST XP</span><div class="bar"><i id="bar"></i></div><span id="xp">0 / 122</span></div>
+
+  <div class="lvlrow">
+    <span><small>LVL 1</small>Deficient</span>
+    <span class="now"><small>NOW</small>Baseline</span>
+    <span class="target"><small>NEXT SESSION</small>Pro</span>
+    <span><small>AFTER PRO</small>Elite</span>
+    <span><small>LVL 5</small>World-Class</span>
+  </div>
+
+  <section>
+    <h2>The model · Human first, Professional second, AI third</h2>
+    <div class="panel">
+      <p style="margin-top:0">Before any of the steps below, anchor on this. It's the order I run everything in, and it's the reason my system works.</p>
+      <div class="stepgrid" style="margin:12px 0">
+        <div class="step"><b>1 · Human first</b><p>You lived it. You say it out loud, in your own words, before any machine touches it. Voice notes, a whiteboard photo, the story you told me on our call. That's the source.</p></div>
+        <div class="step"><b>2 · Professional second</b><p>You know who it's for and what it has to do. The reader. Your point of view. Your standard. Twenty years of selling taught you this. Write it down once so the machine can work inside it.</p></div>
+        <div class="step"><b>3 · AI third</b><p>It's last on purpose. If you start with AI, you skip the part where you become worth listening to. The machine doesn't write and then you edit. You set the standard, and it works inside it.</p></div>
+      </div>
+      <p>Knowing more was the old game. Orchestrating better is the new one. You stop asking for outputs and start designing a system: what goes in, who does what, what gets checked, and where you step in. That's the difference between being a worker in the chat and being the orchestrator of it. With a good system I feel like I've got ten people working for me.</p>
+      <p style="margin-bottom:0;font-family:var(--disp);font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-ink)">The words I'll use on this page</p>
+      <div class="defs" style="margin-top:8px">
+        <div><b>Project</b> — one place in Claude for one body of work. The instructions and files inside it load every time. You stop re-explaining yourself.</div>
+        <div><b>Skill</b> — a plain-English file of rules. "Never say this. Always show the old line and the new line." When you like an output and know you'll want it again, you save it as a skill. You've already done this with your account plan template.</div>
+        <div><b>Node</b> — one job. Think of it as an agent with one specialty. One node absorbs your sources. One proposes lines. One cuts. You want a specialist as a node, not one agent doing a bunch of writing and editing.</div>
+        <div><b>Agent</b> — a node that runs on its own once you kick it off. Same thing, different word. Don't let the word scare you. It's a plain-English file with one job.</div>
+        <div><b>Graph</b> — the order the nodes hand off in. Voice notes go to Absorb. Absorb hands to Propose. Propose hands to Cut. Cut hands to Pangram. Then it comes back to you. You start it. You check it. You decide what survives.</div>
+        <div><b>Propose only</b> — the rule that makes it Pro. The machine never writes a line of your prose from scratch. It proposes a line, shows where it came from, and waits.</div>
+        <div><b>VOICE file</b> — a skill that holds how you sound and the words you never use. Every node reads it first. When you catch Claude doing something you'd never do, you add one line. You never say it again.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Replay the session</h2>
+    <div class="panel rec">
+      <div class="frame" id="frame">[ recording placeholder — the member's page has the call here ]</div>
+      <input type="text" id="recUrl" placeholder="Paste the Zoom or Otter recording link">
+      <p style="margin:0;font-size:13px;color:var(--mute)">On the member's page this holds the recording and transcript. Zoom links open in a new tab; YouTube or Loom links play right here.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>What we learned on the call</h2>
+    <div class="panel learn">
+      <textarea rows="2" data-l="1">Where you are: you talk it into Wispr Flow or pull an Otter call, Claude drafts, you tinker until it's 90% you, then you ship. One chat per chapter. That's Baseline. Most sellers I talk to aren't there yet.</textarea>
+      <textarea rows="2" data-l="2">The flip: Claude stops drafting and starts proposing. It shows you the old line, the new line, and why. You decide. Human first, Professional second, AI third.</textarea>
+      <textarea rows="2" data-l="3">You said both—the book and the newsletter. That's good. The high-leverage move is to work from the same pile, but create 3 outputs using the hub-and-spoke model: A chapter turns into a monthly newsletter issue which could be chopped up into several shorter posts. Then you get feedback from qualitative data (like comments and DMs), not just vanity metrics, and tweak and double down on it as you go. Build the Project once for the book. The newsletter comes out of it. And LinkedIn posts downstream from that. The same skills and agents can work across all 3 for consistency.</textarea>
+      <textarea rows="4" data-l="4">The one move, in plain steps: open Claude and make one Project named after your book. Paste the instructions from this page into it. Upload your five best pieces of writing. Add a file called VOICE with how you sound and the words you never use. From now on, every chapter chat starts inside that Project. That's the afternoon you said you need.</textarea>
+      <textarea rows="2" data-l="5">Get your audience off LinkedIn and into something you own. beehiiv, once a month, simple. Start with your coaching calls. Turn one client into your ideal-client page. Install Pangram.</textarea>
+    </div>
+  </section>
+
+  <section>
+    <h2>Open question · is the title the right name?</h2>
+    <div class="panel">
+      <p style="margin-top:0">Someone you respect asked you what your book title actually means, and told you to get specific. Fair question. Your own data says two things at once: people at rock bottom with no budget reach out, and a high-earning seller reached out too.</p>
+      <p>Here's where I land. There is definitely money in specificity, one single outcome. That's what cohorts are built for. But I think for our personality types, what we're offering is more than one outcome, and I've left money on the table by not picking one. So don't lock the name yet. Put it out there and do it in public. Write the newsletter, watch who replies, and let the name come from who shows up.</p>
+      <p style="margin-bottom:0">Bring your answer to the next session: keep the name, sharpen it, or change it.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The shape of the system</h2>
+    <div class="pipe"><span>FEED</span><i>→</i><span>ABSORB</span><i>→</i><span>ARCHITECT</span><i>→</i><span>DRAFT</span><i>→</i><span>REFINE</span></div>
+    <div class="stepgrid">
+      <div class="step"><b>FEED</b><p>Your Wispr Flow dump for the chapter. Keep that. That's the human part. Plus everything you've already written, ranked, in one Project.</p></div>
+      <div class="step"><b>ABSORB</b><p>One node reads the dump and your sources and hands back the themes and your best lines. No writing yet.</p></div>
+      <div class="step"><b>ARCHITECT</b><p>It proposes the shape of the chapter. You say yes before anything gets drafted.</p></div>
+      <div class="step"><b>DRAFT</b><p>Propose only. Old line, new line, why. It never writes a line of your prose from scratch.</p></div>
+      <div class="step"><b>REFINE</b><p>One node cuts what doesn't sound like you. Pangram grades it. WriteHuman can help spur ideas if you're tired or in a pinch for time. Then you read it out loud.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The one move · Baseline → Pro</h2>
+    <p>This is one move, broken into pieces you can do from your phone. Do them in order. When the last one is checked, you're Pro.</p>
+
+    <div class="mission"><input type="checkbox" data-xp="10"><div><b>Make one Project for your book</b><p>One place. The instructions load every time. You stop telling Claude who you are in every chapter chat.</p>
+      <details><summary>Project instructions template</summary><pre id="p1">You are helping me, [Your Name], write my book, [Your Book Title].
+
+WHO I AM: [Your role, in one line]. [The one moment your story turns on, in one line]. [What you rebuilt to, with a number]. [Family, in three words]. [What you do on the side].
+
+WHO MY READER IS: [The one person you're writing for, in one sentence].
+
+MY POINT OF VIEW: [Where you break from the conventional advice in your field, in two sentences].
+
+THE ORDER OF WORK: I speak first (voice dump). You never write prose from scratch. You propose lines built from my own words and show where each one came from. I decide what survives.
+
+NEVER: invent a fact or a feeling I didn't state. Praise a passage without saying exactly why. Use these words: leverage (as a verb), journey, unlock, game-changer, stress-test, "let that sink in."
+
+ALWAYS: contractions. Short sentences. End most paragraphs on an ordinary sentence, not a punchline. One metaphor per section at most.</pre><button class="copy" data-c="p1">Copy</button></details></div><span class="xp">+12 XP</span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="10"><div><b>Upload five things only you could have written</b><p>Not your company's collateral or a template. Instead, use your best internal talk, your best narrative business case (redacted of course), and your 3 best LinkedIn posts. Then paste this line.</p>
+      <details><summary>The line that makes them outrank everything</summary><pre id="p2">These five artifacts are mine. They outrank every other source you have. When your instincts about good writing conflict with what's in these artifacts, these artifacts win.
+
+Before you write anything for me, tell me in your own words: what is my point of view, and where would I break from the conventional advice in my field? If you're not sure, say so.</pre><button class="copy" data-c="p2">Copy</button></details></div><span class="xp">+10 XP</span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="10"><div><b>Rank your sources</b><p>Same way you'd ramp a new rep. You don't hand them the whole knowledge base. You say, "Read these three first." Your talks and your best business case get a 7. Random voice notes get a 0.5. Tell Claude which one wins when they disagree.</p>
+      <details><summary>Source ranking block</summary><pre id="p3">MY SOURCE WEIGHTS (higher wins when sources conflict):
+7 — My best internal talk, my best narrative business case, my book map
+5 — My top 10 LinkedIn posts by saves and comments
+3 — My coaching client session notes, my other LinkedIn posts
+1 — My chapter voice dumps from before this Project existed
+0.5 — Saved articles, other people's frameworks, stray voice notes</pre><button class="copy" data-c="p3">Copy</button></details></div><span class="xp">+10 XP</span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="12"><div><b>Flip the order: propose, don't write</b><p>This is the whole level. Here's how mine works: it never writes a line of my prose from scratch. It can propose a line, and it has to show where it came from. Then I accept it, reject it, or write something better than both.</p>
+      <details><summary>Propose/dispose rule</summary><pre id="p4">From now on you never draft my prose from scratch. For every section:
+1. Quote the exact lines from my voice dump you are working from.
+2. Propose a revised line. Show: OLD → NEW → WHY (one sentence).
+3. Mark anything only I can write as [I WRITE] with one line on what it needs to do.
+4. Stop and wait for my decision before moving on.</pre><button class="copy" data-c="p4">Copy</button></details></div><span class="xp">+10 XP</span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="6"><div><b>Start the trust score</b><p>Pick any number. Points come off for three things: fabrication, false confidence, flattery. Praise is not comprehension. Points go on when it answers a question the sources don't cover and reasons the way you would.</p>
+      <details><summary>Trust score rule</summary><pre id="p5">Your trust score with me is 25/100. You earn a seat on my book team by proving you understand my work, not by summarizing it.
++ points: you answer a question my sources don't cover by reasoning the way I would.
+− points: fabrication, false confidence, flattery. Calling a passage "powerful" without saying exactly why costs you 5 points.
+Report your score at the end of every session and tell me what changed it.</pre><button class="copy" data-c="p5">Copy</button></details></div><span class="xp">+6 XP</span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="6"><div><b>Get Pangram and grade one section</b><p>A grader outside Claude. Go to <a href="https://www.pangram.com" target="_blank" rel="noopener" style="color:var(--gold-ink)">pangram.com</a>, paste one finished section, read the score. Don't chase zero. Brandon's own 2024 writing scored 42% AI. Use it to find the sentences that don't sound like you.</p></div><span class="xp">+6 XP</span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="6"><div><b>Read every section out loud before it goes to the Google Doc</b><p>If it doesn't sound like you talking, it isn't ready. That test alone will save you more than any prompt I could hand you.</p></div><span class="xp">+6 XP</span></div>
+  </section>
+
+  <section>
+    <h2>Locked until Pro · Elite</h2>
+    <p>Don't start these until you're Pro. Read them so you know what's next. That's all.</p>
+
+    <div class="mission"><input type="checkbox" data-xp="10"><div><b>Write your voice file</b><p>A plain-English file every node reads first. How you sound. The words you never use. The things you've already told Claude twice. When you catch it doing something you'd never do, add one line here. You never say it again.</p>
+      <details><summary>My VOICE file (starter)</summary><pre id="p6">MY VOICE — read this before any writing task for me, [Your Name]
+
+HOW I SOUND: [Three plain words]. I say the number. I name the person. I don't hedge.
+MY MOVES: I open with the moment, not the lesson. "[One line from your story with a number in it.]" I let the fact do the work. Short paragraphs. One story per section.
+NEVER: "journey," "unlock," "game-changer," "let that sink in," "here's the thing." No three-item lists that all sound the same. No paragraph that ends on a punchline. No feelings I didn't state.
+LESSONS I'VE TAUGHT YOU (I add one line each time I correct you):
+- 2026-09-03: </pre><button class="copy" data-c="p6">Copy</button></details></div><span class="xp">+10 XP</span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="10"><div><b>Split the jobs into workers</b><p>Absorb. Draft. Cut. One job each. You want a specialist as a node, not one agent doing a bunch of writing and editing. In Claude these are separate Projects or skills that read the VOICE file first.</p>
+      <details><summary>My Cut node's only job</summary><pre id="p7">You are my Cut node. You do not add. You only remove or flag.
+Read this section against MY VOICE. For every sentence, answer: would I say this out loud to a friend?
+Flag and propose removal of: my banned words, three-part parallel lists, paragraph-ending punchlines, any feeling or fact I didn't state, any sentence that could describe someone else's book.
+Count the metaphors in the section and report the number to me. More than one per section is over budget.
+Give me a redline. Then stop.</pre><button class="copy" data-c="p7">Copy</button></details></div><span class="xp">+10 XP</span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="6"><div><b>Add a grader you don't control</b><p>Run every finished section through Pangram, or hand it to one person who knows you. The same model that writes the answer shouldn't grade the answer.</p></div><span class="xp">+6 XP</span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="6"><div><b>End every chapter with a carryover note</b><p>Two paragraphs: what's locked, what's open, where the trust score is. Then keep the conversation. Don't start fresh tomorrow.</p>
+      <details><summary>Carryover template</summary><pre id="p8">MY CARRYOVER — Chapter __ — [date]
+LOCKED: (decisions I've made that are final: the opening moment, the keeper lines, the chapter's one idea)
+OPEN: (what I still haven't decided, and the options on the table)
+TRUST SCORE: __/100 — what moved it
+MY FIRST MOVE NEXT SESSION: (one line)</pre><button class="copy" data-c="p8">Copy</button></details></div><span class="xp">+6 XP</span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="8"><div><b>Point the system at a second product</b><p>Same pile, new output. The newsletter. The $15K talk. How do you make the stuff you're already going to do anyway more valuable? That's the whole question.</p></div><span class="xp">+8 XP</span></div>
+  </section>
+
+  <section>
+    <h2>Where it lands · an audience you own</h2>
+    <p>This isn't a second move. It's where the writing goes.</p><p>You asked me where your blind spots are. This is the one. You've got to start building an owned audience. Get it off LinkedIn and into something you own. For me, that's beehiiv. When I launched <i>7 Steps to 7 Figures</i>, the list did the selling. Same with the book: on my publishing deal there are no bookstores and no preorders, so the list is the launch. Start yours before the book is done, not after.</p>
+
+    <div class="mission"><input type="checkbox" data-xp="8"><div><b>Set up beehiiv this week — one issue a month</b><p>You said it yourself: start simple, once a month, and you'll stay consistent. One place for the newsletter, the website, paid tiers, automations, and pages like this one. Move the couple hundred emails out of ClickUp. Use my link below.</p>
+      <p style="margin-top:8px"><a id="affLink" href="#" target="_blank" rel="noopener" style="font-family:var(--disp);color:var(--gold-ink);font-size:15px">→ Start on beehiiv (Brandon's link)</a></p></div><span class="xp">+8 XP</span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="8"><div><b>Publish one long-form post from a coaching transcript</b><p>The simplest thing to do is a long-form piece, and it comes from stuff you're already doing anyway. Take one client call. One lesson, one story, 600 to 900 words. That's your first issue.</p>
+      <details><summary>Transcript → post prompt</summary><pre id="p9">Here is a transcript of one of my coaching calls. Do not summarize it.
+1. Find the one moment where my client's problem became clear, and the one thing that changed for them. Quote their exact words (remove their name and company).
+2. Propose a 600–900 word post for my newsletter built on that moment. Open with the moment, not a lesson. My words from the call are the payload. One idea only.
+3. Show me which lines came from the transcript and which you proposed. Mark anything only I can write as [I WRITE].
+Then stop.</pre><button class="copy" data-c="p9">Copy</button></details></div><span class="xp">+8 XP</span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="6"><div><b>Chop it into five or six LinkedIn posts</b><p>The long piece is the hub. Chop it into five LinkedIn posts. One idea each, text only, very light. Here's my perspective on the world, that kind of post. Each one points back to the newsletter.</p>
+      <details><summary>Hub → spokes prompt</summary><pre id="p10">Here is my published newsletter post. Propose five or six LinkedIn posts from it for me.
+Rules: one idea per post. 60–250 words. Text only. Open on the moment or the number, not the lesson. No hashtags. No "here's the thing." End on an ordinary sentence, not a punchline. Each one ends with one line pointing to my full post.
+For each, show me which sentences are lifted from my newsletter and which are new. Mark anything only I can write as [I WRITE]. Then stop.</pre><button class="copy" data-c="p10">Copy</button></details></div><span class="xp">+6 XP</span></div>
+  </section>
+
+  <section>
+    <h2>How Brandon made this page (so you can do it for your coaching calls)</h2>
+    <div class="stepgrid">
+      <div class="step"><b>Inputs</b><p>Our email thread. Which of my last five essays the member opened. Every recorded call we've had since 2024. His Autonomy Assessment. James's one comment on his story in my book. My own skill files.</p></div>
+      <div class="step"><b>Nodes</b><p>One node read the essays and his opens. One found James's comment. One drafted my prep, propose-only, against my voice rules. One built the console and this page. One checked it.</p></div>
+      <div class="step"><b>Human</b><p>I asked the question and set the frame. Then I changed it three times after I read the first draft. You might want to do this for your own coaching sessions.</p></div>
+    </div>
+    <div class="mission" style="margin-top:12px"><input type="checkbox" data-xp="0"><div><b>Turn one client into your ideal-client persona</b><p>Three recorded calls with one client is enough. Tell it everything about that client and let it turn them into an ideal-client page. Then build your content and your business around getting more of them.</p>
+      <details><summary>Ideal-client persona prompt</summary><pre id="p12">Read MY VOICE first. Then read these three transcripts of my calls with [client] (name and company removed).
+Build me one page called MY IDEAL CLIENT:
+1. Who he is in one paragraph: role, income range, family, what his week looks like.
+2. What he told me he wants, in his exact words (quote three lines).
+3. What he's afraid of, in his exact words (quote two lines).
+4. The moment he decided to work with me — what happened right before.
+5. Five phrases he uses that I should use back.
+Propose only. Do not invent anything he didn't say. Then stop.</pre><button class="copy" data-c="p12">Copy</button></details></div><span class="xp"></span></div>
+
+    <div class="mission"><input type="checkbox" data-xp="0"><div><b>Your version, for one client</b><p>One Otter transcript plus your VOICE file. One prep page before the call. One page like this after. Start with the prep page.</p>
+      <details><summary>Coaching-call prep prompt</summary><pre id="p11">Read MY VOICE first. Then read this transcript of my last call with [client].
+Do not summarize the call. Build me a one-page prep for my next call:
+1. The one open loop from last time (their exact words, quoted).
+2. What they committed to, as a table: commitment / done? (mark "ask" — never assume).
+3. Three questions for me to ask, in order.
+4. One thing I should say plainly, in my voice, and one thing to avoid.
+Propose only. Mark anything only I can write as [I WRITE]. Then stop.</pre><button class="copy" data-c="p11">Copy</button></details></div><span class="xp"></span></div>
+  </section>
+
+  <section>
+    <h2>Side quest · early reader of Permanent Leverage</h2>
+    <div class="mission"><input type="checkbox" data-xp="0"><div><b>Read the manuscript and send me your notes within a month</b><p>The member is an early reader of my manuscript. It goes back to James mid-October. His story is in Chapter 12, and one fact from our call fixed a timeline James had flagged.</p></div><span class="xp"></span></div>
+  </section>
+
+  <section>
+    <h2>Boss level · the read-aloud test</h2>
+    <div class="boss">
+      <p style="margin-top:0">Take the chapter you finish this month. Read it out loud to someone who knows you. Then ask them three things.</p>
+      <ol><li>"Which sentence sounded least like me?"</li><li>"Which sentence did you want to repeat back?"</li><li>"Did anything sound like every other sales book?"</li></ol>
+      <p style="margin-bottom:0">Add their answers to your VOICE file. That's the system getting smarter. Bring the chapter to our the next session call with every sentence marked: yours, or proposed.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why this matters beyond the book</h2>
+    <p>A skill is something you have. A capability is something you own. That's the difference between leverage you're leasing and leverage you keep. The system you build this month writes your book. Then it writes your newsletter, your talk, and your coaching program from the same pile. And it goes with you when you leave your company.</p>
+  </section>
+
+  <p class="sig">Brandon 🐝<br>Next session: bring the chapter with every sentence marked yours or proposed.<br><span style="font-size:12px">The beehiiv link above is my partner link. I earn a commission if you sign up. It costs you nothing extra and you get a 14-day trial plus 20% off for three months.</span></p>
+</div>
+<div class="toast" id="toast">Copied</div>
+
+<script>
+(function(){
+  const KEY='quest-demo-v1'; let s={}; try{s=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){s={}}
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}};
+  const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
+  // missions
+  s.m=s.m||{}; const boxes=$$('.mission input[type=checkbox]');
+  function xp(){let t=0;boxes.forEach(b=>{if(b.checked)t+=+b.dataset.xp});$('#xp').textContent=t+' / 122';$('#bar').style.width=Math.min(100,t/1.22)+'%'}
+  boxes.forEach((b,i)=>{b.checked=!!s.m[i];b.closest('.mission').classList.toggle('done',b.checked);b.onchange=()=>{s.m[i]=b.checked;b.closest('.mission').classList.toggle('done',b.checked);save();xp()}}); xp();
+  // learnings
+  s.l=s.l||{}; $$('[data-l]').forEach(t=>{if(s.l[t.dataset.l])t.value=s.l[t.dataset.l];t.oninput=()=>{s.l[t.dataset.l]=t.value;save()}});
+  // recording
+  const rec=$('#recUrl'), fr=$('#frame');
+  function render(u){if(!u){fr.textContent='Recording link goes here';return}
+    let m;
+    if((m=u.match(/(?:youtu\.be\/|v=)([\w-]{6,})/)))fr.innerHTML=`<iframe src="https://www.youtube.com/embed/${m[1]}" allowfullscreen title="Session recording"></iframe>`;
+    else if((m=u.match(/loom\.com\/share\/([\w]+)/)))fr.innerHTML=`<iframe src="https://www.loom.com/embed/${m[1]}" allowfullscreen title="Session recording"></iframe>`;
+    else fr.innerHTML=`<a href="${u.replace(/"/g,'')}" target="_blank" rel="noopener" style="font-family:var(--disp);font-size:16px;color:var(--gold-ink)">▶ Open the session recording</a>`;}
+  rec.value=s.rec||''; render(s.rec); rec.oninput=()=>{s.rec=rec.value.trim();save();render(s.rec)};
+  // beehiiv link: set data-aff below before exporting
+  const AFF='https://www.beehiiv.com/?via=Brandon-Fluharty';
+  const a=$('#affLink'); a.href=AFF;
+  // copy
+  $$('.copy').forEach(b=>b.onclick=()=>{navigator.clipboard.writeText($('#'+b.dataset.c).textContent).then(()=>{const t=$('#toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1400)})});
+})();
+</script>
+<script>
+(function(){
+  function send(){var h=document.documentElement.scrollHeight;try{window.parent.postMessage({type:'pp-playground-resize',height:h},'*')}catch(e){}}
+  window.addEventListener('load',send);window.addEventListener('resize',send);
+  if(window.ResizeObserver){new ResizeObserver(send).observe(document.body)}
+  document.addEventListener('toggle',send,true);setInterval(send,1500);
+})();
+</script>
+</body>
+</html>
